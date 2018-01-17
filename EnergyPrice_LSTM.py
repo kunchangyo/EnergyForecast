@@ -49,7 +49,6 @@ def scale_back(df, df_scaled):
     df_orig = scaler.inverse_transform(df_scaled)
     return df_orig
 
-
 def create_rolling_sequences(df, window_size, time_lag, labels=False):
     """
     creates new data frame based on previous observation
@@ -72,9 +71,6 @@ def create_rolling_sequences(df, window_size, time_lag, labels=False):
     labels_r = np.squeeze(labels_r,axis=2) # reshape labels to 2D
     return np.array(features_), np.array(labels_r)
 
-
-# In[24]:
-
 def create_training_and_test(df, window_size, time_lag, num_days_test):
     """
       Split data into training and testing
@@ -93,8 +89,6 @@ def create_training_and_test(df, window_size, time_lag, num_days_test):
     labels_train = labels_[:-num_seq_test]
     labels_test = labels_[-num_seq_test:]
     return features_train, labels_train, features_test, labels_test
-
-
 
 def LSTM_Model(df, window_size, time_lag, num_days_test, num_hidden_units, learning_rate, batch_size):
     """
@@ -187,7 +181,6 @@ historical_weather_avg = historical_weather.groupby('prediction_date', group_key
 # Then merge with electrcity price date by prediction_date
 energy_and_weather = pd.merge(energy_price, historical_weather_avg, left_on = 'date (UTC)', right_on='prediction_date')
 print energy_and_weather.shape
-energy_and_weather.head(2)
 
 # Create data frame of both weather and prices
 # Extract electricity market price without time labels
@@ -196,9 +189,6 @@ weather_df = energy_and_weather[['temperature', 'air_density', 'pressure', 'wind
 full_df = energy_and_weather[['Price', 'temperature', 'air_density', 'pressure', 'precipitation','wind_gust', 'wind_direction']]
 full_df_scale = normalize_data(full_df)
 print full_df_scale.shape
-
-
-# In[242]:
 
 # Train LSTM
 LSTM_train = LSTM_Model(
